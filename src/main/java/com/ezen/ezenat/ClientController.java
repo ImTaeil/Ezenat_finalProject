@@ -24,9 +24,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.ezenat.dto.EzenatMemberDTO;
-import com.ezen.ezenat.dto.EzenatNoticeBoardDTO;
-import com.ezen.ezenat.dto.ReviewBoardDTO;
-import com.ezen.ezenat.service.EzenatNoticeBoardMapper;
+//import com.ezen.ezenat.dto.EzenatNoticeBoardDTO;
+//import com.ezen.ezenat.dto.ReviewBoardDTO;
+//import com.ezen.ezenat.service.EzenatNoticeBoardMapper;
 import com.ezen.ezenat.service.MemberMapper;
 
 @Controller
@@ -36,8 +36,8 @@ public class ClientController {
 	 * @Autowired ReviewMapper reviewMapper;
 	 */
 
-	@Autowired
-	EzenatNoticeBoardMapper ezenatNoticeBoardMapper;
+//	@Autowired
+//	EzenatNoticeBoardMapper ezenatNoticeBoardMapper;
 	
 	@Autowired
 	MemberMapper memberMapper;
@@ -67,56 +67,56 @@ public class ClientController {
 	}
 
 	// 공지사항 목록
-	@RequestMapping(value = "notice.do")
-	public ModelAndView listNotice(HttpServletRequest req, @RequestParam(required = false) String pageNum) {
-		
-		int pageSize = 5;
-		if (pageNum == null){
-			pageNum = "1";
-		}
-		
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = (currentPage - 1) * pageSize + 1;
-		int endRow = startRow + pageSize - 1;
-		int count = ezenatNoticeBoardMapper.getNoticeBoardCount();
+//	@RequestMapping(value = "notice.do")
+//	public ModelAndView listNotice(HttpServletRequest req, @RequestParam(required = false) String pageNum) {
+//		
+//		int pageSize = 5;
+//		if (pageNum == null){
+//			pageNum = "1";
+//		}
+//		
+//		int currentPage = Integer.parseInt(pageNum);
+//		int startRow = (currentPage - 1) * pageSize + 1;
+//		int endRow = startRow + pageSize - 1;
+//		int count = ezenatNoticeBoardMapper.getNoticeBoardCount();
+//
+//		if (endRow>count) endRow = count;
+//		List<EzenatNoticeBoardDTO> list = null;
+//		if (count>0){
+//			Map<String, Integer> params = new HashMap();
+//			params.put("startRow", startRow);
+//			params.put("endRow", endRow);
+//			
+//			System.out.println("startRow"+ startRow +"endRow"+ endRow);
+//			
+//			list = ezenatNoticeBoardMapper.listNoticeBoard(params);
+//			int pageCount = count/pageSize + (count%pageSize==0 ? 0 : 1);
+//			int pageBlock = 5;
+//			int startPage = (currentPage-1)/pageBlock * pageBlock + 1;
+//			int endPage = startPage + pageBlock - 1;
+//			
+//			if (endPage > pageCount) endPage = pageCount;
+//			
+//			req.setAttribute("startPage", startPage);
+//			req.setAttribute("endPage", endPage);
+//			req.setAttribute("pageBlock", pageBlock);
+//			req.setAttribute("pageCount", pageCount);
+//		}
+//		int rowNum = count - (currentPage - 1) * pageSize;
+//		req.setAttribute("count", count);
+//		req.setAttribute("rowNum", rowNum);
+//
+//		return new ModelAndView("client_view/notice","list_notice", list);
+//	}
 
-		if (endRow>count) endRow = count;
-		List<EzenatNoticeBoardDTO> list = null;
-		if (count>0){
-			Map<String, Integer> params = new HashMap();
-			params.put("startRow", startRow);
-			params.put("endRow", endRow);
-			
-			System.out.println("startRow"+ startRow +"endRow"+ endRow);
-			
-			list = ezenatNoticeBoardMapper.listNoticeBoard(params);
-			int pageCount = count/pageSize + (count%pageSize==0 ? 0 : 1);
-			int pageBlock = 5;
-			int startPage = (currentPage-1)/pageBlock * pageBlock + 1;
-			int endPage = startPage + pageBlock - 1;
-			
-			if (endPage > pageCount) endPage = pageCount;
-			
-			req.setAttribute("startPage", startPage);
-			req.setAttribute("endPage", endPage);
-			req.setAttribute("pageBlock", pageBlock);
-			req.setAttribute("pageCount", pageCount);
-		}
-		int rowNum = count - (currentPage - 1) * pageSize;
-		req.setAttribute("count", count);
-		req.setAttribute("rowNum", rowNum);
-
-		return new ModelAndView("client_view/notice","list_notice", list);
-	}
-
-	// 공지사항 내용
-	@RequestMapping(value = "content_notice.do")
-	public ModelAndView contentBoard(HttpServletRequest req) {
-		int notice_board_num = Integer.parseInt(req.getParameter("num"));
-		EzenatNoticeBoardDTO dto = ezenatNoticeBoardMapper.getNoticeBoardContent(notice_board_num);
-
-		return new ModelAndView("client_view/notice_content_board","content", dto);
-	}
+//	// 공지사항 내용
+//	@RequestMapping(value = "content_notice.do")
+//	public ModelAndView contentBoard(HttpServletRequest req) {
+//		int notice_board_num = Integer.parseInt(req.getParameter("num"));
+//		EzenatNoticeBoardDTO dto = ezenatNoticeBoardMapper.getNoticeBoardContent(notice_board_num);
+//
+//		return new ModelAndView("client_view/notice_content_board","content", dto);
+//	}
 
 //	// 상품 상세페이지
 //	@RequestMapping(value = "content_product.do")
@@ -130,24 +130,24 @@ public class ClientController {
 		return "client_view/write_board";
 	}
 
-	// 공지사항 쓰기, 자주 묻는 질문 쓰기 등록
-	@RequestMapping(value = "write_board.do", method = RequestMethod.POST)
-	public String writeBoardOk(HttpServletRequest req, EzenatNoticeBoardDTO dto) {
-		HttpSession session = req.getSession();
-		EzenatMemberDTO memberInfo = (EzenatMemberDTO) session.getAttribute("memberInfo");
-//		String writer = memberInfo.getName();
-		dto.setNotice_board_writer("writer");
-		dto.setNotice_board_writer_ip(req.getRemoteAddr());
-		int res = ezenatNoticeBoardMapper.insertNoticeBoard(dto);
-		if(res>0) {
-			req.setAttribute("msg", "게시글 등록 성공, 게시글 목록으로 이동합니다.");
-			req.setAttribute("url", "notice.do");
-			}else {
-			req.setAttribute("msg", "게시글 등록 실패, 게시글 등록페이지로 이동합니다.");
-			req.setAttribute("url", "write_board.do");
-			}
-			return "forward:WEB-INF/views/message.jsp";
-		}
+//	// 공지사항 쓰기, 자주 묻는 질문 쓰기 등록
+//	@RequestMapping(value = "write_board.do", method = RequestMethod.POST)
+//	public String writeBoardOk(HttpServletRequest req, EzenatNoticeBoardDTO dto) {
+//		HttpSession session = req.getSession();
+//		EzenatMemberDTO memberInfo = (EzenatMemberDTO) session.getAttribute("memberInfo");
+////		String writer = memberInfo.getName();
+//		dto.setNotice_board_writer("writer");
+//		dto.setNotice_board_writer_ip(req.getRemoteAddr());
+//		int res = ezenatNoticeBoardMapper.insertNoticeBoard(dto);
+//		if(res>0) {
+//			req.setAttribute("msg", "게시글 등록 성공, 게시글 목록으로 이동합니다.");
+//			req.setAttribute("url", "notice.do");
+//			}else {
+//			req.setAttribute("msg", "게시글 등록 실패, 게시글 등록페이지로 이동합니다.");
+//			req.setAttribute("url", "write_board.do");
+//			}
+//			return "forward:WEB-INF/views/message.jsp";
+//		}
 		
 	
 	@RequestMapping(value = "test.do")
@@ -283,66 +283,66 @@ public class ClientController {
 		return "client_view/history_point";
 	}
 	
-	// 리뷰 작성 완료
-	@RequestMapping(value = "write_review.do", method=RequestMethod.POST)
-	public String writeReviewOk(MultipartHttpServletRequest multi, HttpServletRequest req, 
-								ReviewBoardDTO dto) {
-		
-//파일 받아와 리스트에 넣기 		
-		List<MultipartFile> review_images_list = multi.getFiles("imagesArray");
-		//파일이 있으면 
-		if (review_images_list.size() > 0) {
-
-        	//폴더명 지정해줄 날짜와 형식 설정
-    		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-    		Date date = new Date();
-
-    		HttpSession session = multi.getSession();
-    		//폴더 경로 : resource/review_images/당일날짜/상품번호(또는 코드)
-    		String upPath = session.getServletContext().getRealPath("review_images") + File.separator + sdf.format(date) + File.separator + dto.getProduct_num();
-
-    		MultipartFile mf;
-    		String filename;
-    		File file = new File(upPath);
-    		Path path = Paths.get(file.getPath());
-    		
-    		try {
-                // 디렉토리 생성
-        		Files.createDirectories(path);
-     
-                System.out.println(path + " 디렉토리가 생성되었습니다.");
-     
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
-        
-        	for(int i=0;i<review_images_list.size();i++){
-            	mf = review_images_list.get(i);		
-            	//파일 이름 겹치지 않게 정해주기(uuid로 랜덤한 이름 만들어주고+원래 파일명+멤버 아이디(현재는 멤버넘버))
-        		filename = UUID.randomUUID() + "_" + mf.getOriginalFilename()+ "_" + dto.getMember_num();
-
-        		File image_file = new File(upPath, filename);
-        		try {
-        			mf.transferTo(image_file);
-        		} catch (IOException e) {
-        			e.printStackTrace();
-        		}
-        		int img_res = reviewMapper.insertReviewImage(filename);
-        		if(img_res>0) {
-        			System.out.println(i+"번 째 리뷰 이미지 db에 저장 완");
-        		}
-            }
-		
-		int res = reviewMapper.insertReview(dto);
-		if(res>0) {
-//정상적으로 글쓰기 성공 시, list_review로 이동
-			req.setAttribute("url", "list_review.do");
-		}else {
-//글쓰기 실패 시, write_review로 이동
-			req.setAttribute("url", "write_review.do");
-		}
-	}return "forward:WEB-INF/view/message.jsp";
-}
+//	// 리뷰 작성 완료
+//	@RequestMapping(value = "write_review.do", method=RequestMethod.POST)
+//	public String writeReviewOk(MultipartHttpServletRequest multi, HttpServletRequest req, 
+//								ReviewBoardDTO dto) {
+//		
+////파일 받아와 리스트에 넣기 		
+//		List<MultipartFile> review_images_list = multi.getFiles("imagesArray");
+//		//파일이 있으면 
+//		if (review_images_list.size() > 0) {
+//
+//        	//폴더명 지정해줄 날짜와 형식 설정
+//    		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//    		Date date = new Date();
+//
+//    		HttpSession session = multi.getSession();
+//    		//폴더 경로 : resource/review_images/당일날짜/상품번호(또는 코드)
+//    		String upPath = session.getServletContext().getRealPath("review_images") + File.separator + sdf.format(date) + File.separator + dto.getProduct_num();
+//
+//    		MultipartFile mf;
+//    		String filename;
+//    		File file = new File(upPath);
+//    		Path path = Paths.get(file.getPath());
+//    		
+//    		try {
+//                // 디렉토리 생성
+//        		Files.createDirectories(path);
+//     
+//                System.out.println(path + " 디렉토리가 생성되었습니다.");
+//     
+//            }catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        
+//        	for(int i=0;i<review_images_list.size();i++){
+//            	mf = review_images_list.get(i);		
+//            	//파일 이름 겹치지 않게 정해주기(uuid로 랜덤한 이름 만들어주고+원래 파일명+멤버 아이디(현재는 멤버넘버))
+//        		filename = UUID.randomUUID() + "_" + mf.getOriginalFilename()+ "_" + dto.getMember_num();
+//
+//        		File image_file = new File(upPath, filename);
+//        		try {
+//        			mf.transferTo(image_file);
+//        		} catch (IOException e) {
+//        			e.printStackTrace();
+//        		}
+//        		int img_res = reviewMapper.insertReviewImage(filename);
+//        		if(img_res>0) {
+//        			System.out.println(i+"번 째 리뷰 이미지 db에 저장 완");
+//        		}
+//            }
+//		
+//		int res = reviewMapper.insertReview(dto);
+//		if(res>0) {
+////정상적으로 글쓰기 성공 시, list_review로 이동
+//			req.setAttribute("url", "list_review.do");
+//		}else {
+////글쓰기 실패 시, write_review로 이동
+//			req.setAttribute("url", "write_review.do");
+//		}
+//	}return "forward:WEB-INF/view/message.jsp";
+//}
 
 	
 //	@RequestMapping("list_review.do")
