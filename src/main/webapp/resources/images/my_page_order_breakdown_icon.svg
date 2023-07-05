@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_00000060738225514359173780000002555029006828494494_);}
+	.st1{fill:#FFFFFF;stroke:#040000;stroke-width:4.7;}
+	.st2{fill:none;stroke:#353636;stroke-width:4.7;}
+	.st3{fill:none;stroke:#050101;stroke-width:4.7;}
+</style>
+<g>
+	<defs>
+		<rect id="SVGID_1_" x="8.7" y="6" width="82.7" height="87.9"/>
+	</defs>
+	<clipPath id="SVGID_00000120557480938184772590000012739050919903348625_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g id="반복_그리드_4" style="clip-path:url(#SVGID_00000120557480938184772590000012739050919903348625_);">
+		<g transform="translate(-1550.637 -334.501)">
+			<path id="빼기_4" class="st1" d="M1630.9,426.1h-71.3c4.4-1.1,7.7-4.8,8.1-9.4c1-7.6,0.1-66.9,0-73.6v-0.2h71.3v0.2
+				c0.1,6.7,1,66,0,73.7C1638.7,421.3,1635.4,425.1,1630.9,426.1L1630.9,426.1z"/>
+		</g>
+	</g>
+</g>
+<path id="패스_131" class="st2" d="M28.8,46.8h45.3"/>
+<path id="패스_133" class="st2" d="M28.8,69.5h45.3"/>
+<path id="패스_134" class="st2" d="M46.5,30l5.3,6l10.6-12.9"/>
+<path id="패스_131_00000143595583010231675220000012882890455554554802_" class="st3" d="M29.5,47.5h45.3"/>
+<path id="패스_132" class="st3" d="M29.5,58.8h45.3"/>
+<path id="패스_133_00000137825995340775462850000008816520213650919573_" class="st3" d="M29.5,70.2h45.3"/>
+<path id="패스_134_00000160187441310404580870000001925607288622211976_" class="st3" d="M47.2,30.7l5.3,6l10.6-12.9"/>
+</svg>

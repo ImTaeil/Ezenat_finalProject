@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.ezenat.mapper.memberMapper">
+	<insert id="joinMember" parameterType="ezenatMemberDTO">
+		insert into ezenat_member values(member_num_seq.nextval
+										, #{ id }
+										, #{ password }
+										, #{ name }
+										, #{ nickname }
+										, #{ postal_code }
+										, #{ address }
+										, #{ detail_address }
+										, #{ hp1 }
+										, #{ hp2 }
+										, #{ hp3 }
+										, #{ certification }
+										, #{ email }
+										, #{ gender }
+										, #{ birth_year }
+										, #{ birth_month }
+										, #{ birth_day }
+										, #{ bank_account_owner }
+										, #{ bank_code }
+										, #{ bank_account_num }
+										, #{ point }
+										, #{ member_rating }
+										, #{ admin_power }
+										, sysdate
+										, 'N'   				<!-- 블랙리스트 인지아닌지. 기본값 N부여 -->
+		)
+	</insert>
+	
+	<select id="idUseCheck" parameterType="String" resultType="int">
+		select count(*) from ezenat_member where id = #{ id }
+	</select>
+	
+	<select id="checkLogin" parameterType="String" resultType="ezenatMemberDTO">
+		select * from ezenat_member where id = #{ id }
+	</select>
+	
+	<select id="getEzenatMemberById" parameterType="String" resultType="ezenatMemberDTO">
+		select * from ezenat_member where id = #{ id }
+	</select>
+
+	<select id="listMember" resultType="EzenatMemberDTO">
+		select * from ezenat_member where black = 'N' order by member_num desc
+	</select>
+
+	<select id="checkJoin" resultType ="int" parameterType ="Map">
+		select count(*) from ezenat_member where hp1=#{hp1} and hp2=#{hp2} and hp3=#{hp3}
+	</select>
+
+	<!-- 상인 + 예지님 추가수정한 부분. -->
+	<select id="getMember" parameterType="int" resultType="EzenatMemberDTO">
+		select * from ezenat_member where member_num = #{member_num}
+	</select>
+	
+	<update id="updateMember" parameterType="EzenatMemberDTO">
+		update ezenat_member set
+		password = #{ password }
+		, nickname = #{ nickname }
+		, postal_code = #{ postal_code }
+		, address = #{ address }
+		, detail_address = #{ detail_address }
+		, hp1 = #{ hp1 }
+		, hp2 = #{ hp2 }
+		, hp3 = #{ hp3 }
+		, email = #{ email }
+		, birth_year = #{ birth_year }
+		, birth_month = #{ birth_month }
+		, birth_day = #{ birth_day }
+		where id = #{ id }
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from ezenat_member where id = #{ id }
+	</delete>
+	
+	<!-- 아이디 및 패스워드 찾기 -->
+	<select id= "findIdHp" parameterType="EzenatMemberDTO" resultType="String">
+        select id from ezenat_member where name = #{name} and hp1 =#{hp1} and hp2 =#{hp2} and hp3 =#{hp3}
+    </select>
+
+	<select id= "findIdEmail" parameterType="EzenatMemberDTO" resultType="String">
+        select id from ezenat_member where name = #{name} and email =#{email}
+    </select>
+
+	<select id="findPw" parameterType = "Map" resultType = "int">
+		select count (*) from ezenat_member where name =#{name} and email =#{email}
+	</select>
+
+	<update id ="resetPw" parameterType = "Map" >
+		update ezenat_member set password =#{password} where  name =#{name} and email =#{email}
+	</update>
+
+
+	
+	
+</mapper>

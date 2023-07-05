@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ezen.ezenat.mapper.adminMapper">
+
+
+	<select id= "listCate" resultType = "EzenatCategoryDTO">
+ 		select 
+ 				category_level, category_name, category_code, category_parent
+ 		from ezenat_category
+ 				start with category_parent is null connect by prior category_code = category_parent
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+
+	<insert id="insertProduct" parameterType="EzenatProductDTO">
+		insert into ezenat_product values(ezenat_product_seq.nextval
+		,#{product_name}
+		, #{product_size}
+		,#{product_color}
+		,#{product_price}
+		,#{product_code}
+		,#{product_largecategory}
+		,#{product_mediumcategory}
+		,#{product_smallcategory}
+		,0																		<!-- 초기수량 0 -->
+		,#{product_explain_design}
+		,#{product_explain_fabric}
+		,#{product_explain_size}
+		,sysdate
+		,#{product_margin}
+		,#{product_exchanged}
+		,#{product_refunded}
+		,#{product_content}
+		,'N'	
+		,#{category_code}																<!-- 가입시 회원 블랙리스트 유무 N으로 디폴트.-->
+		)
+	</insert>
+	
+	<select id="getProductCount" parameterType="EzenatProductDTO" resultType="int">
+		select count(*) from ezenat_product
+		where product_name = #{product_name} and product_size = #{product_size}
+		and product_color = #{product_color} and  product_price =#{product_price}
+		and product_code = #{product_code} and product_smallcategory = #{product_smallcategory}
+	</select>
+	
+	<select id="getProductNum" parameterType="EzenatProductDTO" resultType="int">
+		select product_num from ezenat_product
+		where product_name = #{product_name} and product_size = #{product_size}
+		and product_color = #{product_color} and  product_price =#{product_price}
+		and product_code = #{product_code} and product_smallcategory = #{product_smallcategory}
+	</select>
+	
+	<insert id="insertProductImage" parameterType = "EzenatProductImageDTO">
+		insert into ezenat_product_image values(#{product_num},#{product_image1},#{product_image2},#{product_image3},#{product_image4},#{product_image5},#{product_image6},#{product_image7},#{product_image8},#{product_image9},#{product_image10})
+	</insert>
+
+	<select id = "listProd" resultType = "EzenatProductAllDTO">		
+		select 
+		A.*,B.*
+		from 
+		(ezenat_product A inner join ezenat_product_image B 
+		on A.product_num	= B.product_num)
+		where A.product_del = 'N'
+	</select>
+	
+	<select id = "getProd" parameterType = "int" resultType = "EzenatProductAllDTO">
+		select 
+		A.*,B.*
+		from
+		(ezenat_product A inner join ezenat_product_image B 
+		on A.product_num	= B.product_num)
+		 where A.product_num =#{product_num}
+	</select>
+	
+	<update id = "updateProd" parameterType = "EzenatProductDTO">
+		update
+		ezenat_product
+		set product_name =#{product_name},
+			 product_size =#{product_size},
+			 product_color =#{product_color},
+			 product_price =#{product_price},
+			 product_code =#{product_code},
+			 product_content =#{product_content},
+			 product_pqty =#{product_pqty}
+			 
+		where product_num =#{product_num}
+	</update>
+	
+	<update id="updateProdImage" parameterType = "EzenatProductImageDTO">
+	
+	update ezenat_product_image 
+	set product_image1 =#{product_image1},
+		 product_image2 =#{product_image2},
+		 product_image3 =#{product_image3},
+	 	 product_image4 =#{product_image4},
+	 	 product_image5 =#{product_image5},
+		 product_image6 =#{product_image6},
+		 product_image7 =#{product_image7},
+	 	 product_image8 =#{product_image8},
+		 product_image9 =#{product_image9},
+	 	 product_image10 =#{product_image10}
+	
+		where product_num =#{product_num}
+
+	</update>
+
+	<select id="imageList" resultType="EzenatProductImageDTO" parameterType="int">
+		select * from ezenat_product_image where product_num = #{product_num}
+	</select>
+
+	<update id="moveDeleteProdList" parameterType="String">		<!--  삭제목록으로 이동. del값을 Y로 변경하여. -->
+		update ezenat_product set product_del
+		= 'Y' where product_num = #{num}
+	</update>
+	
+
+	<select id="deleteProdList" resultType="EzenatProductAllDTO"
+		parameterType="int">																	
+		select A.*,B.* from 
+		ezenat_product A inner join ezenat_product_image B
+		on A.product_num = B.product_num where
+		A.product_num=#{product_num} and A.product_del = 'Y'
+	</select>
+	
+	<select id="deleteNumList" resultType="int">
+		select product_num from
+		ezenat_product where product_del = 'Y' 
+	</select>
+	
+<!-- 	<update id="editPqty" parameterType ="int">
+		update ezenat_product set product_pqty
+		 where product_num = #{num}
+	</update> -->
+	
+	<select id= "codeCheck" parameterType = "String" resultType="int">
+		select count(*) from ezenat_product
+		where product_code =#{input}
+	</select>
+	
+
+	
+	<delete id = "deleteRealProdList" parameterType="String">
+		delete from ezenat_product where product_del = 'Y' and product_num = #{num}
+	</delete>
+	
+	<delete id = "deleteProdImgList" parameterType="String">
+		delete from ezenat_product_image where product_num = #{num}
+	</delete>  
+	
+	<select id = "searchProductname" parameterType = "String" resultType="EzenatProductAllDTO">
+		select A.*,B.* from
+		ezenat_product A inner join ezenat_product_image B
+		on A.product_num = B.product_num where
+		A.product_name like #{searchString} and A.product_del = 'N'
+	</select>
+	
+	
+	<select id = "searchProductnameDel" parameterType = "String" resultType="EzenatProductAllDTO">
+		select A.*,B.* from
+		ezenat_product A inner join ezenat_product_image B
+		on A.product_num = B.product_num where
+		A.product_name like #{searchString} and A.product_del = 'Y'
+	</select>
+	
+	<select id = "searchProductcode" parameterType = "String" resultType="EzenatProductAllDTO">
+		select A.*,B.* from
+		ezenat_product A inner join ezenat_product_image B
+		on A.product_num = B.product_num where
+		A.product_code like #{searchString} and A.product_del = 'N'
+	</select>
+	
+	<select id = "searchProductcodeDel" parameterType = "String" resultType="EzenatProductAllDTO">
+		select A.*,B.* from
+		ezenat_product A inner join ezenat_product_image B
+		on A.product_num = B.product_num where
+		A.product_code like #{searchString} and A.product_del = 'Y'
+	</select>
+	
+	<!-- 7월4일기준 추가 -->
+	
+	
+	<delete id="adminDeleteMember" parameterType = "String">
+		delete from ezenat_member where id =#{id}
+	</delete>
+	
+	<select id = "searchId" parameterType ="String" resultType = "EzenatMemberDTO">
+		select * from ezenat_member where id like #{searchString}	
+	</select>
+	
+	<select id = "searchEmail" parameterType ="String" resultType = "EzenatMemberDTO">
+		select * from ezenat_member where email like #{searchString}
+	</select>
+	
+	<select id = "searchHp" parameterType ="String" resultType = "EzenatMemberDTO">
+		select * from ezenat_member where hp1=#{hp1} and hp2=#{hp2} and hp3=#{hp3} like #{searchString}
+	</select>
+	
+	<select id = "searchNickname" parameterType ="String" resultType = "EzenatMemberDTO">
+		select * from ezenat_member where nickname like #{searchString}
+	</select>
+	
+	<select id = "searchAddress" parameterType ="String" resultType = "EzenatMemberDTO">
+		select * from ezenat_member where address like #{searchString}
+	</select>
+
+	<update id="memberMoveBlackList" parameterType="String">		
+		update ezenat_member set black
+		= 'Y' where id = #{id}
+	</update>
+
+	<select id="memberBlackList" resultType="EzenatMemberDTO"
+		parameterType="String">																	
+		select * from
+		ezenat_member
+		where black = 'Y'
+	</select>
+	
+	<select id="memberIdList" resultType="String">
+		select id from
+		ezenat_member where black = 'Y' 
+	</select>
+	
+</mapper>

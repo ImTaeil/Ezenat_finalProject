@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ezen.ezenat.mapper.snsMapper"> <!-- 지정 -->
+
+
+	<select id="listSnsBoard" resultType="EzenatSnsBoardDTO">
+		select * from ezenat_sns_board order by sns_board_num desc
+	</select>
+	
+	<insert id="insertSnsBoard" parameterType="EzenatSnsBoardDTO">
+		insert into ezenat_sns_board values(ezen_sns_board_seq.nextval,#{content}, sysdate,#{main_image},#{sub_image1},#{sub_image2},#{sub_image3},#{sub_image4},#{member_num})
+	</insert>
+		
+	<select id="searchSnsBoard" parameterType="String" resultType="EzenatSnsBoardDTO">
+		<!-- ezenat_sns_board 의 content에서 값을 검색할때 #을 붙이고 오기 때문에 #을제외한 2번째문자열부터 (일반내용) 가져오거나,  #을가지고있는 단어는 제외해서 찾아라.(그말인즉슨 해시태그 제외하고 가져와라) -->
+		select * from ezenat_sns_board where content  like '%'||substr(#{searchString},2)||'%' and content not like '%'||#{searchString}||'%'
+	</select>
+	
+	<select id="getSnsBoard" parameterType="int" resultType="EzenatSnsBoardDTO">
+		select * from ezenat_sns_board where sns_board_num =#{sns_board_num}	
+	</select>
+	
+	
+	
+	
+	<!--   <delete id="deleteSnsBoard" parameterType="int">
+       delete from ezenat_sns_board where sns_board_num = #{sns_board_num}
+   	 </delete>
+
+    <select id="listMemberSnsBoard">
+        select * from ezenat_sns_board where member_num = #{member_num}
+    </select>
+	 -->
+ 
+ 
+	<!-- 해시태그 관련 mapper -->
+	
+	<select id="getSnsBoardNum" parameterType="EzenatSnsBoardDTO" resultType="int">
+			select sns_board_num from ezenat_sns_board 
+			where main_image =#{main_image} and content = #{content} 
+			and member_num =#{member_num}
+	</select>
+	
+	<insert id="addHashTag" parameterType="hashTagDTO">
+		insert into hashTag values(hashTag_seq.nextval,#{hashTag_name},#{style_num})
+	</insert>
+
+	<select id="searchHashTag" parameterType="String" resultType="EzenatSnsBoardDTO">
+		select * from ezenat_sns_board where content like  #{searchString}			<!-- #을 숨겨서 가져옴. -->
+	</select>
+		
+	<select id="getHashTag" parameterType="String" resultType="HashTagDTO">
+		select * from hashTag where hashTag_name = #{hashTag}
+	</select> 
+	
+	<select id="listHashTag" resultType="String">
+		select hashTag_name from hashTag 
+	</select>
+	
+	<select id="clickHashTag" parameterType="String" resultType="HashTagDTO">
+		select * from hashTag where hashTag_name = #{hashTag_name}
+	</select> 
+	
+	<!-- <select id="getHashTagNum" parameterType="String"  resultType="int">
+		select hashTag_num from hashTag where hashTag_name = #{hashTag}
+	</select>
+	 -->
+
+	
+
+	 
+	 
+	
+	
+	
+	
+</mapper>
