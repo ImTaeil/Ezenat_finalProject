@@ -12,6 +12,8 @@
 		<li><a href="list_sns.do">sns페이지로 이동</a></li>
 		<!-- 어드민페이지 -->
 		<li><a href="admin_main.do">어드민페이지로 이동</a></li>
+		<!-- 어드민페이지 -->
+		<li><a href="admin_sub_main.do">sub어드민페이지로 이동</a></li>
 		
 		<li><a href = "mall_index.ezenat">이제낫 홈페이지</a></li>
 	

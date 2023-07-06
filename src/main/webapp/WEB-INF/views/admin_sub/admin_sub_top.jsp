@@ -34,15 +34,11 @@
 			<div class="btn-group dropend">
 				<button type="button" class="btn btn-secondary btn-lg dropdown-toggle dropdown-button" data-bs-toggle="dropdown" aria-expanded="false">상품관리</button>
 				<ul class="dropdown-menu">
-					<li><a class="dopdown-item" href="admin_sub_category.do">- 카테고리관리</a></li>
 					<li><a class="dopdown-item" href="admin_sub_product_list.do">- 상품목록</a></li>
 					<li><a class="dopdown-item" href="admin_sub_product_insert.do">- 상품등록</a></li>
-					<li><a class="dopdown-item" href="admin_sub_product_deleteList.do">- 상품삭제목록</a></li>
-					<li><a class="dopdown-item" href="admin_sub_product_pqty.do">- 상품재고관리</a></li>
-					<li><a class="dopdown-item" href="mall_client/content_product.do">- 클라상품상세페이지</a></li>
 				</ul>
 			</div>
-			<div class="btn-group dropend">
+<!-- 			<div class="btn-group dropend"> *******보류*********
 				<button type="button" class="btn btn-secondary btn-lg dropdown-toggle dropdown-button" data-bs-toggle="dropdown" aria-expanded="false">회원관리</button>
 				<ul class="dropdown-menu">
 					<li><a class="dopdown-item" href="admin_sub_member_list.do">- 회원목록</a></li>
@@ -51,7 +47,7 @@
 					<li><a class="dopdown-item" href="admin_sub_member_rating.do">- 회원등급별관리</a></li>
 					<li><a class="dopdown-item" href="admin_sub_member_benefit.do">- 회원혜택관리</a></li>
 				</ul>
-			</div>
+			</div> -->
 			<div class="btn-group dropend">
 				<button type="button" class="btn btn-secondary btn-lg dropdown-toggle dropdown-button" data-bs-toggle="dropdown" aria-expanded="false">주문관리</button>
 				<ul class="dropdown-menu">
@@ -61,7 +57,7 @@
 					<li><a class="dopdown-item" href="admin_sub_order_exchange.do">- 주문교환관리</a></li>
 					<li><a class="dopdown-item" href="admin_sub_order_return.do">- 주문반품관리</a></li>
 					<li><a class="dopdown-item" href="admin_sub_order_refund.do">- 주문환불관리</a></li>
-					<li><a class="dopdown-item" href="admin_sub_order_card.do">- 카드취소관리</a></li>
+					<li><a class="dopdown-item" href="admin_sub_order_card.do">- 카드거래관리</a></li>
 					<li><a class="dopdown-item" href="admin_sub_receipt.do">- 현금영수증</a></li>
 				</ul>
 			</div>

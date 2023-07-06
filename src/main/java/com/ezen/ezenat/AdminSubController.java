@@ -28,58 +28,9 @@ public class AdminSubController {
 		return mav;
 	}
 	
-	@RequestMapping("admin_sub_category.do")
-	public ModelAndView adminCategoryManagement() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_category");
-		
-		return mav;
-	}
-	
-	@RequestMapping("admin_sub_member_benefit.do")
-	public ModelAndView adminMemberBenefit() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_member_benefit");
-		
-		return mav;
-	}
-	
-	@RequestMapping("admin_sub_member_list.do")
-	public ModelAndView adminMemberList() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_member_list");
-		
-		return mav;
-	}
-	
-	@RequestMapping("admin_sub_member_out.do")
-	public ModelAndView adminMemberOut() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_member_out");
-		
-		return mav;
-	}
-	
-	@RequestMapping("admin_sub_member_rating.do")
-	public ModelAndView adminMemberRating() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_member_rating");
-		
-		return mav;
-	}
-	
-	@RequestMapping("admin_sub_member_rest.do")
-	public ModelAndView adminMemberRest() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_member_rest");
-		
-		return mav;
-	}
-	
-	@RequestMapping("admin_sub_order_cancel.do")
-	public ModelAndView adminOrderCancel() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_order_cancel");
-		
-		return mav;
-	}
-	
-	@RequestMapping("admin_sub_order_card.do")
-	public ModelAndView adminOrderCard() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_order_card");
+	@RequestMapping("admin_sub_order_insert.do")
+	public ModelAndView adminOrderinput() {
+		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_order_insert");
 		
 		return mav;
 	}
@@ -119,12 +70,6 @@ public class AdminSubController {
 		return mav;
 	}
 	
-	@RequestMapping("admin_sub_product_deleteList.do")
-	public ModelAndView adminProductDeleteList() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_product_deleteList");
-		
-		return mav;
-	}
 	
 	@RequestMapping("admin_sub_receipt.do")
 	public ModelAndView adminReceipt() {
@@ -133,12 +78,6 @@ public class AdminSubController {
 		return mav;
 	}
 	
-	@RequestMapping("admin_sub_product_pqty.do")
-	public ModelAndView adminProductPqty() {
-		ModelAndView mav = new ModelAndView("admin_sub/admin_sub_product_pqty");
-		
-		return mav;
-	}
 	
 	@RequestMapping("admin_sub_store_stat.do")
 	public ModelAndView adminStoreStat() {
@@ -146,11 +85,6 @@ public class AdminSubController {
 		
 		return mav;
 	}
-	
-	@RequestMapping("content_product.do")
-	public ModelAndView contentProduct() {
-		ModelAndView mav = new ModelAndView("mall_client/content_product");
-		
-		return mav;
-	}
+	//카드거래 조회, 주문 입력 창
+
 }
